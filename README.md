@@ -9,4 +9,4 @@
 Técnologias utilizadas:
  - Python
  - Json
- - 
+
