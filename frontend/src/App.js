@@ -10,16 +10,14 @@ import {
   CardContent,
   CircularProgress,
   Button,
-  Snackbar,
-  Alert,
   Box,
   TextField,
 } from "@mui/material";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-const API_URL = "https://coinverter-backend-ni0v.onrender.com/rates";
-const HISTORY_URL = "https://coinverter-backend-ni0v.onrender.com/history";
+const API_URL = "http://localhost:8000/rates";
+const HISTORY_URL = "http://localhost:8000/history";
 
 function getLocaleFromCurrency(currency) {
   switch (currency) {
@@ -31,12 +29,6 @@ function getLocaleFromCurrency(currency) {
       return "de-DE";
     case "GBP":
       return "en-GB";
-    case "JPY":
-      return "ja-JP";
-    case "CAD":
-      return "en-CA";
-    case "ARS":
-      return "es-AR";
     case "BTC":
       return "en-US";
     default:
@@ -63,7 +55,6 @@ function App() {
       setRates(response.data);
     } catch (e) {
       setRateError("Failed to fetch exchange rates.");
-  
     } finally {
       setLoading(false);
     }
@@ -95,19 +86,16 @@ function App() {
           params: { base: currency, days: 30 },
         });
 
-        const data = Object.entries(response.data).map(([date, rateObj]) => {
-          return {
-            date,
-            rate: parseFloat(rateObj["BRL"]),
-          };
-        });
+        const data = Object.entries(response.data).map(([date, obj]) => ({
+          date,
+          rate: parseFloat(obj.BRL),
+        }));
 
         data.sort((a, b) => new Date(a.date) - new Date(b.date));
         setHistory(data);
       }
     } catch (e) {
       setHistoryError("Failed to fetch historical data.");
- 
       setHistory([]);
     } finally {
       setLoadingHistory(false);
@@ -160,9 +148,6 @@ function App() {
           <MenuItem value="EUR">EUR (Euro)</MenuItem>
           <MenuItem value="BTC">BTC (Bitcoin)</MenuItem>
           <MenuItem value="GBP">GBP (Libra)</MenuItem>
-          <MenuItem value="JPY">JPY (Peso Japonês)</MenuItem>
-          <MenuItem value="CAD">CAD (Dólar Canadense)</MenuItem>
-          <MenuItem value="ARS">ARS (Peso Argentino)</MenuItem>
         </Select>
       </FormControl>
 
@@ -230,7 +215,9 @@ function App() {
       ) : historyError ? (
         <Typography color="error">{historyError}</Typography>
       ) : (
-        <Typography>No historical data available.</Typography>
+        <Typography align="center" color="textSecondary">
+          No historical data available for {selectedCurrency}. Try again later.
+        </Typography>
       )}
     </Container>
   );
