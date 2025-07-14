@@ -63,6 +63,10 @@ def fetch_currency_info(code):
         return None
 
 
+@app.get("/")
+def read_root():
+    return {"status": "API is running"}
+
 @app.get("/rates")
 def get_rates():
     global cache, cache_time
