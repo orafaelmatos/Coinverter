@@ -49,21 +49,21 @@ function App() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [amount, setAmount] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [rateError, setRateError] = useState(null);
+  const [historyError, setHistoryError] = useState(null);
 
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
   const fetchRates = async () => {
     setLoading(true);
-    setError(null);
+    setRateError(null);
     try {
       const response = await axios.get(API_URL);
       setRates(response.data);
     } catch (e) {
-      setError("Failed to fetch exchange rates.");
-      setSnackbarOpen(true);
+      setRateError("Failed to fetch exchange rates.");
+  
     } finally {
       setLoading(false);
     }
@@ -71,6 +71,7 @@ function App() {
 
   const fetchHistory = async (currency) => {
     setLoadingHistory(true);
+    setHistoryError(null);
     try {
       if (currency === "BTC") {
         const response = await axios.get("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart", {
@@ -105,8 +106,8 @@ function App() {
         setHistory(data);
       }
     } catch (e) {
-      setError("Failed to fetch historical data.");
-      setSnackbarOpen(true);
+      setHistoryError("Failed to fetch historical data.");
+ 
       setHistory([]);
     } finally {
       setLoadingHistory(false);
@@ -178,9 +179,9 @@ function App() {
         <Box display="flex" justifyContent="center" mt={4}>
           <CircularProgress />
         </Box>
-      ) : error ? (
+      ) : rateError ? (
         <Typography color="error" align="center">
-          {error}
+          {rateError}
         </Typography>
       ) : selectedRate ? (
         <Card variant="outlined" sx={{ mb: 4 }}>
@@ -226,15 +227,11 @@ function App() {
             <Line type="monotone" dataKey="rate" stroke="#1976d2" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
+      ) : historyError ? (
+        <Typography color="error">{historyError}</Typography>
       ) : (
         <Typography>No historical data available.</Typography>
       )}
-
-      <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={() => setSnackbarOpen(false)}>
-        <Alert onClose={() => setSnackbarOpen(false)} severity="error" sx={{ width: "100%" }}>
-          {error}
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }
