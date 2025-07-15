@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-const API_BASE = "https://coinverter-backend-ni0v.onrender.com/";
+const API_BASE = "https://coinverter-backend-ni0v.onrender.com";
 
 const currencies = [
   { code: "USD", label: "USD (Dólar Americano)" },
