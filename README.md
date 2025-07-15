@@ -4,7 +4,7 @@ A **modern web application** that delivers real-time currency exchange rates, hi
 This project demonstrates **API integration**, **FastAPI backend development**, and a **React-based frontend**, designed to simulate a real-world financial application.  
 
 **Live Demo:**  
-🌐 [Open Application](https://coinverter-r1gnnxsh5-rafael-matos-projects.vercel.app/)  
+🌐 [Open Application](https://coinverter-rafael-matos-projects.vercel.app/)  
 
 ---
 
