@@ -1,57 +1,60 @@
 # Currency Exchange Rates API
-A simple project designed to practice API implementation skills within software applications, fetching real-time currency rates from AwesomeAPI.
+A modern web application that provides real-time currency exchange rates using data from trusted financial APIs.
 
-## Project Objective
-The main goal of this project is to provide a lightweight tool to retrieve and display current exchange rates for popular currencies, simulating real-world use cases involving financial data integration.
+This project demonstrates API integration, backend development with FastAPI, and frontend implementation with React, designed to simulate real-world scenarios of financial applications.
 
-## The system allows users to:
- - Select a currency (USD, EUR, BTC)
- - Retrieve the latest exchange rate for the selected currency
- - Display the exchange rate clearly to the user
+Live Demo
+🌐 Open App - https://coinverter-cvtubq8yr-rafael-matos-projects.vercel.app/
 
-## Technologies Used
- - Python 3.x
- - FastAPI
- - Requests (HTTP client)
- - React
-   
-## Features
- - Real-time currency exchange rate retrieval
- - User input for currency selection
- - Simple and clear output of exchange rates
- - Basic error handling for API requests
+## Features:
+✅ Real-time exchange rates for multiple currencies (USD, EUR, GBP, BTC)
+✅ Interactive interface with currency selection and amount conversion
+✅ Historical chart for the last 30 days
+✅ Backend caching to optimize API calls
+✅ Responsive UI built with Material-UI
+✅ Deployed on Vercel (Frontend) and Render (Backend) for easy access
 
-# Getting Started
+## Architecture
+ - Frontend: React (Vercel)
+ - Backend: FastAPI (Render)
+ - APIs Used:
+   - BACEN API for fiat currencies (USD, EUR, GBP)
+   - CoinGecko API for BTC (cached to prevent rate limit issues)
+
+## Endpoints
+GET /rate/{currency} → Get the latest exchange rate for a currency
+GET /history?base=USD&days=30 → Get historical rates for the last N days
+
+
+# How to Use
+1. Open the frontend app (Vercel link above).
+2. Select a currency (USD, EUR, GBP, BTC).
+3. Enter the amount and see it converted to BRL.
+4. View the last 30 days history in a chart.
+
+# Local Development (Optional)
 Clone the Repository
 ```
-bash
-Copy code
 git clone https://github.com/your-username/currency-exchange-api.git
 cd currency-exchange-api
-(Optional) Create and activate a virtual environment
 
-bash
-Copy code
+(Optional) Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 Install dependencies
 ```
-bash
-Copy code
 pip install -r requirements.txt
 ```
 
 Run the FastAPI server
 ```
-bash
-Copy code
 uvicorn backend.main:app --reload
 ```
 
-# Notes
-This project uses the alphavantage free service to retrieve currency data.
-
-It is intended for educational and learning purposes.
-
-You can extend it by adding support for more currencies or saving historical data.
+Run the FastAPI server
+```
+cd frontend
+npm install
+npm start
+```
