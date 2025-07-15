@@ -37,7 +37,7 @@ This project demonstrates **API integration**, **FastAPI backend development**, 
 ---
 
 ## 🚀 How to Use
-1. Access the [live app](https://coinverter-r1gnnxsh5-rafael-matos-projects.vercel.app/).
+1. Access the [live app](https://currency-converter-flame-nu.vercel.app/).
 2. Select a currency (USD, EUR, GBP, BTC).
 3. Enter the amount and view the conversion to BRL.
 4. Check the 30-day historical chart for trend analysis.
