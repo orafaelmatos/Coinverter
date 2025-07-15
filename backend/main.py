@@ -118,6 +118,15 @@ def fetch_bacen_history(code: int, start_date: str, end_date: str):
 def root():
     return {"status": "Bacen FX API is running"}
 
+def fetch_btc_rate_cached():
+    global btc_cache, btc_cache_time
+    now = time.time()
+    if btc_cache and now - btc_cache_time < CACHE_DURATION:
+        return btc_cache
+    value = fetch_btc_rate()
+    btc_cache = value
+    btc_cache_time = now
+    return value
 
 @app.get("/rates")
 def get_rates():

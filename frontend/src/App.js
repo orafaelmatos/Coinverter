@@ -50,9 +50,21 @@ function App() {
   const fetchRates = async () => {
     setLoading(true);
     setRateError(null);
+
+    const cachedRates = localStorage.getItem("rates");
+    const cachedTime = localStorage.getItem("rates_time");
+
+    if (cachedRates && cachedTime && Date.now() - cachedTime < 5 * 60 * 1000) {
+      setRates(JSON.parse(cachedRates));
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.get(API_URL);
       setRates(response.data);
+      localStorage.setItem("rates", JSON.stringify(response.data));
+      localStorage.setItem("rates_time", Date.now());
     } catch (e) {
       setRateError("Failed to fetch exchange rates.");
     } finally {
