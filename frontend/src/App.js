@@ -16,8 +16,8 @@ import {
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-const API_URL = "http://localhost:8000/rates";
-const HISTORY_URL = "http://localhost:8000/history";
+const API_URL = "https://coinverter-backend-ni0v.onrender.com/rates";
+const HISTORY_URL = "https://coinverter-backend-ni0v.onrender.com/history";
 
 function getLocaleFromCurrency(currency) {
   switch (currency) {
