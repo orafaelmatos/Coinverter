@@ -131,6 +131,7 @@ def fetch_btc_rate_cached():
     btc_cache_time = now
     return value
 
+
 @app.get("/rate/{currency}")
 def get_rates(currency):
     global cache_time
@@ -183,3 +184,40 @@ def get_history(base: str = "USD", days: int = 30):
     cache_history[key] = result
     cache_history_time[key] = now
     return result
+
+from fastapi import Query
+
+
+@app.get("/convert")
+def convert_amount(
+    from_currency: str = Query(..., min_length=3, max_length=3),
+    to_currency: str = Query(..., min_length=3, max_length=3),
+    amount: float = Query(..., gt=0),
+):
+    from_currency = from_currency.upper()
+    to_currency = to_currency.upper()
+
+    supported_currencies = {"USD", "EUR", "GBP", "BTC", "BRL"}
+    if from_currency not in supported_currencies or to_currency not in supported_currencies:
+        raise HTTPException(status_code=400, detail="Unsupported currency")
+
+    def get_rate(currency):
+        if currency == "BRL":
+            return 1.0
+        if currency == "BTC":
+            return fetch_btc_rate_cached()
+        elif currency in CURRENCY_CODES:
+            return fetch_bacen_rate(CURRENCY_CODES[currency])
+        else:
+            raise HTTPException(status_code=400, detail="Unsupported currency")
+
+    from_rate = get_rate(from_currency)
+    to_rate = get_rate(to_currency)
+
+    if from_rate is None or to_rate is None:
+        raise HTTPException(status_code=400, detail="Rate not found")
+
+    amount_in_brl = amount * from_rate
+    converted_amount = amount_in_brl / to_rate
+
+    return {"converted_amount": converted_amount}
