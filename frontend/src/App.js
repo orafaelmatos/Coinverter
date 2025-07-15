@@ -16,7 +16,7 @@ import {
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-const API_URL = "https://coinverter-backend-ni0v.onrender.com/rates";
+const API_URL = "https://coinverter-backend-ni0v.onrender.com/rate";
 const HISTORY_URL = "https://coinverter-backend-ni0v.onrender.com/history";
 
 function getLocaleFromCurrency(currency) {
@@ -47,24 +47,14 @@ function App() {
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
-  const fetchRates = async () => {
+  const fetchRates = async (currency) => {
     setLoading(true);
     setRateError(null);
-
-    const cachedRates = localStorage.getItem("rates");
-    const cachedTime = localStorage.getItem("rates_time");
-
-    if (cachedRates && cachedTime && Date.now() - cachedTime < 5 * 60 * 1000) {
-      setRates(JSON.parse(cachedRates));
-      setLoading(false);
-      return;
-    }
-
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(`${API_URL}/${currency}`);
       setRates(response.data);
-      localStorage.setItem("rates", JSON.stringify(response.data));
-      localStorage.setItem("rates_time", Date.now());
+      const value = response.data[currency];
+      setRates(value); 
     } catch (e) {
       setRateError("Failed to fetch exchange rates.");
     } finally {
@@ -115,8 +105,11 @@ function App() {
   };
 
   useEffect(() => {
-    fetchRates();
-  }, []);
+    if (selectedCurrency) {
+      fetchRates(selectedCurrency);
+      fetchHistory(selectedCurrency);
+    }
+  }, [selectedCurrency]);
 
   useEffect(() => {
     if (selectedCurrency) {
@@ -140,7 +133,7 @@ function App() {
     fetchHistory(selectedCurrency);
   };
 
-  const selectedRate = rates?.[selectedCurrency];
+  const selectedRate = rates;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 5 }}>

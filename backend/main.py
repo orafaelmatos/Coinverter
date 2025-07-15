@@ -1,9 +1,10 @@
+import time
+from datetime import datetime, timedelta
+from typing import Dict
+
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime, timedelta
-from typing import Dict
-import time
 
 app = FastAPI()
 
@@ -15,11 +16,13 @@ app.add_middleware(
 )
 
 # --- Config ---
-CACHE_DURATION = 300  # 5 minutes
+CACHE_DURATION = 900
 cache_rates: Dict[str, float] = {}
 cache_time = 0
 cache_history: Dict[str, dict] = {}
 cache_history_time: Dict[str, float] = {}
+btc_cache = None
+btc_cache_time = 0
 
 # --- SGS codes for currencies ---
 CURRENCY_CODES = {
@@ -128,22 +131,27 @@ def fetch_btc_rate_cached():
     btc_cache_time = now
     return value
 
-@app.get("/rates")
-def get_rates():
-    global cache_rates, cache_time
+@app.get("/rate/{currency}")
+def get_rates(currency):
+    global cache_time
+    currency = currency.upper()
     now = time.time()
-    if cache_rates and now - cache_time < CACHE_DURATION:
-        return cache_rates
-
-    updated = {}
-    for currency, code in CURRENCY_CODES.items():
-        updated[currency] = fetch_bacen_rate(code)
     
-    updated["BTC"] = fetch_btc_rate()
+    now = time.time()
+    if cache_rates and now - cache_time < CACHE_DURATION and currency in cache_rates:
+        return {currency: cache_rates[currency]}
     
-    cache_rates = updated
+    if currency == "BTC":
+        value = fetch_btc_rate()
+    elif currency in CURRENCY_CODES:
+        value = fetch_bacen_rate(CURRENCY_CODES[currency])
+    else:
+        raise HTTPException(status_code=400, detail="Unsupported currency")
+    
+    cache_rates[currency] = value
     cache_time = now
-    return updated
+
+    return {currency: value}
 
 
 @app.get("/history")
