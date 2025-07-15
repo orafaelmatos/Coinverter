@@ -4,7 +4,7 @@ A modern web application that provides real-time currency exchange rates using d
 This project demonstrates API integration, backend development with FastAPI, and frontend implementation with React, designed to simulate real-world scenarios of financial applications.
 
 Live Demo
-🌐 Open App - https://coinverter-cvtubq8yr-rafael-matos-projects.vercel.app/
+🌐 Open App - https://coinverter-r1gnnxsh5-rafael-matos-projects.vercel.app/
 
 ## Features:
 ✅ Real-time exchange rates for multiple currencies (USD, EUR, GBP, BTC)
