@@ -9,8 +9,9 @@ This project demonstrates **API integration**, **FastAPI backend development**, 
 ---
 
 ## ✅ Features
-- **Real-Time Exchange Rates**: Supports USD, EUR, GBP, and BTC to BRL conversion.
-- **Interactive UI**: Select currencies, input amounts, and view instant conversions.
+- **Convert Any Currency**: Supports conversion between **any two currencies**.
+- **Real-Time Exchange Rates**: Access up-to-date rates for multiple global currencies including USD, EUR, GBP, BTC, BRL, and more.
+- **Interactive UI**: User-friendly interface to select currencies, enter amounts, and see instant conversion results.
 - **Historical Charts**: Visualize exchange rate trends for the last 30 days.
 - **API Caching**: Optimized backend with caching to reduce API calls and improve performance.
 - **Responsive Design**: Built with Material-UI for seamless experience across devices.
