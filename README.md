@@ -1,57 +1,82 @@
-# Currency Exchange Rates API
-A simple project designed to practice API implementation skills within software applications, fetching real-time currency rates from AwesomeAPI.
+# 💱 Currency Exchange Rates API
 
-## Project Objective
-The main goal of this project is to provide a lightweight tool to retrieve and display current exchange rates for popular currencies, simulating real-world use cases involving financial data integration.
+A **modern web application** that delivers real-time currency exchange rates, historical data visualization, and an intuitive interface for currency conversion.  
+This project demonstrates **API integration**, **FastAPI backend development**, and a **React-based frontend**, designed to simulate a real-world financial application.  
 
-## The system allows users to:
- - Select a currency (USD, EUR, BTC)
- - Retrieve the latest exchange rate for the selected currency
- - Display the exchange rate clearly to the user
+**Live Demo:**  
+🌐 [Open Application](https://coinverter-r1gnnxsh5-rafael-matos-projects.vercel.app/)  
 
-## Technologies Used
- - Python 3.x
- - FastAPI
- - Requests (HTTP client)
- - React
-   
-## Features
- - Real-time currency exchange rate retrieval
- - User input for currency selection
- - Simple and clear output of exchange rates
- - Basic error handling for API requests
+---
 
-# Getting Started
-Clone the Repository
-```
-bash
-Copy code
+## ✅ Features
+- **Real-Time Exchange Rates**: Supports USD, EUR, GBP, and BTC to BRL conversion.
+- **Interactive UI**: Select currencies, input amounts, and view instant conversions.
+- **Historical Charts**: Visualize exchange rate trends for the last 30 days.
+- **API Caching**: Optimized backend with caching to reduce API calls and improve performance.
+- **Responsive Design**: Built with Material-UI for seamless experience across devices.
+- **Full Deployment**:
+  - Frontend on **Vercel**
+  - Backend on **Render**
+
+---
+
+## 🏗️ Architecture
+- **Frontend**: React (deployed on Vercel)
+- **Backend**: FastAPI (deployed on Render)
+- **Data Sources**:
+  - **BACEN API** – for fiat currencies (USD, EUR, GBP)
+  - **CoinGecko API** – for BTC (with backend caching to avoid rate limits)
+
+---
+
+## 🔌 API Endpoints
+- `GET /rate/{currency}` → Retrieve the latest exchange rate for a given currency.
+- `GET /history?base=USD&days=30` → Fetch historical rates for the last N days.
+
+---
+
+## 🚀 How to Use
+1. Access the [live app](https://coinverter-r1gnnxsh5-rafael-matos-projects.vercel.app/).
+2. Select a currency (USD, EUR, GBP, BTC).
+3. Enter the amount and view the conversion to BRL.
+4. Check the 30-day historical chart for trend analysis.
+
+---
+
+## 🛠️ Local Development
+Follow the steps below to run the project locally:
+
+### 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/your-username/currency-exchange-api.git
 cd currency-exchange-api
-(Optional) Create and activate a virtual environment
+```
 
-bash
-Copy code
+### 2️⃣ Backend Setup (FastAPI)
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate   # Windows: venv\Scripts\activate
 ```
-Install dependencies
-```
-bash
-Copy code
+Install dependencies:
+```bash
 pip install -r requirements.txt
 ```
-
-Run the FastAPI server
-```
-bash
-Copy code
+Run the FastAPI server:
+```bash
 uvicorn backend.main:app --reload
 ```
+### 3️⃣ Frontend Setup (React)
+```bash
+cd frontend
+npm install
+npm start
+```
 
-# Notes
-This project uses the alphavantage free service to retrieve currency data.
+# 📊 Tech Stack
+- **Backend**: FastAPI, Uvicorn
+- **Frontend**: React, Material-UI
+- **Deployment**: Vercel (frontend), Render (backend)
+- **APIs**: BACEN, CoinGecko
 
-It is intended for educational and learning purposes.
-
-You can extend it by adding support for more currencies or saving historical data.
+## 📜 License
+This project is licensed under the [MIT License](LICENSE).
