@@ -142,7 +142,7 @@ def get_rates(currency):
         return {currency: cache_rates[currency]}
     
     if currency == "BTC":
-        value = fetch_btc_rate()
+        value = fetch_btc_rate_cached()
     elif currency in CURRENCY_CODES:
         value = fetch_bacen_rate(CURRENCY_CODES[currency])
     else:
