@@ -49,7 +49,7 @@ Follow the steps below to run the project locally:
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/currency-exchange-api.git
+git clone https://github.com/orafaelmatos/currency-exchange-api.git
 cd currency-exchange-api
 ```
 
